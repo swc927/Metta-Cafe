@@ -1,0 +1,122 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Inter", "Segoe UI", "Roboto", sans-serif;
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  min-height: 100vh;
+  color: #f1f1f1;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 2rem;
+}
+
+.container {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 3rem 3.5rem; /* 🔥 more padding */
+  border-radius: 20px;
+  width: 100%;
+  max-width: 1000px;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.3);
+  margin-top: 2rem; /* 🔥 spacing from top */
+}
+
+h1 {
+  font-size: 2.8rem; /* 🔥 bigger title */
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 1rem;
+  color: #ffffff;
+  letter-spacing: 1px;
+}
+
+.container p {
+  text-align: center;
+  font-size: 1.1rem;
+  color: #bbbbbb;
+  margin-bottom: 2rem; /* 🔥 more breathing room */
+}
+
+input[type="file"] {
+  display: block;
+  margin: 0 auto 1.5rem auto; /* 🔥 better spacing */
+  font-size: 1rem;
+  color: #e0e0e0;
+  text-align: center;
+}
+
+button {
+  display: block;
+  margin: 0.5rem auto 2rem auto; /* 🔥 centre and space */
+  padding: 1rem 2rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #ffffff;
+  background: linear-gradient(135deg, #00c6ff, #0072ff);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(0, 114, 255, 0.5);
+}
+
+table {
+  width: 100%;
+  margin-top: 2rem;
+  border-collapse: collapse;
+  font-size: 1rem;
+  background: rgba(255, 255, 255, 0.04); /* translucent table bg */
+  border-radius: 12px;
+  overflow: hidden;
+  color: #ffffff; /* 🔥 Main fix: white text */
+}
+
+th,
+td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+th {
+  background: rgba(0, 199, 255, 0.2);
+  color: #ffffff;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 0.05rem;
+}
+
+td {
+  color: #eaf6ff;
+  text-shadow: 0 0 4px rgba(0, 255, 255, 0.3);
+}
+
+tr:hover {
+  background: rgba(0, 255, 255, 0.05);
+}
+
+canvas {
+  margin-top: 2rem;
+  width: 100% !important;
+  height: 400px !important;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 12px;
+  padding: 1rem;
+}
+
+#tableContainer,
+#salesChart {
+  margin-top: 3rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}

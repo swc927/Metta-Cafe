@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Metta Café</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+  <div class="container">
+    <h1>Metta Café</h1>
+    <p>Select multiple Excel files</p>
+    <input type="file" id="fileUpload" multiple accept=".xlsx,.xls">
+    <button onclick="handleFiles()">Analyse Top Sellers</button>
+
+    <div id="tableContainer"></div>
+
+    <button id="downloadBtn" style="display:none">Download to Excel</button>
+    <canvas id="salesChart" style="display:none"></canvas>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="script.js"></script>
+</body>
+
+</html>
