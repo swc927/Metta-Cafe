@@ -1,6 +1,27 @@
 document.addEventListener("DOMContentLoaded", function () {
   let consolidatedData = {};
 
+  const dropZone = document.getElementById("dropZone");
+  const fileInput = document.getElementById("fileUpload");
+
+  dropZone.addEventListener("dragover", (e) => {
+    e.preventDefault();
+    dropZone.classList.add("dragover");
+  });
+
+  dropZone.addEventListener("dragleave", () => {
+    dropZone.classList.remove("dragover");
+  });
+
+  dropZone.addEventListener("drop", (e) => {
+    e.preventDefault();
+    dropZone.classList.remove("dragover");
+    fileInput.files = e.dataTransfer.files;
+    handleFiles();
+  });
+
+  dropZone.addEventListener("click", () => fileInput.click());
+
   function handleFiles() {
     const input = document.getElementById("fileUpload");
     const files = input.files;
@@ -67,17 +88,26 @@ document.addEventListener("DOMContentLoaded", function () {
       .slice(0, 10);
     const labels = sorted.map((e) => e[0]);
     const data = sorted.map((e) => e[1]);
-    const ctx = document.getElementById("salesChart").getContext("2d");
-    document.getElementById("salesChart").style.display = "block";
 
-    const gradient = ctx.createLinearGradient(0, 0, 0, 400);
-    gradient.addColorStop(0, "#00f0ff");
-    gradient.addColorStop(1, "#00bfff");
+    const barCanvas = document.getElementById("salesChart");
+    const pieCanvas = document.getElementById("pieChart");
 
-    Chart.defaults.color = "#ffffff"; // sets global font colour
-    Chart.defaults.font.family = "Inter, sans-serif"; // optional styling
+    const dpr = window.devicePixelRatio || 2;
+    const displayWidth = barCanvas.parentElement.offsetWidth || 2000;
+    const rowHeight = 70;
+    const displayHeight = Math.max(400, labels.length * rowHeight);
 
-    new Chart(ctx, {
+    barCanvas.style.width = `${displayWidth}px`;
+    barCanvas.style.height = `${displayHeight}px`;
+    barCanvas.width = displayWidth * dpr;
+    barCanvas.height = displayHeight * dpr;
+
+    const barCtx = barCanvas.getContext("2d");
+    barCtx.scale(dpr, dpr);
+
+    barCanvas.style.display = "block";
+
+    new Chart(barCtx, {
       type: "bar",
       data: {
         labels,
@@ -85,45 +115,103 @@ document.addEventListener("DOMContentLoaded", function () {
           {
             label: "Top 10 SKU Sales",
             data,
-            backgroundColor: gradient,
-            borderRadius: 8,
-            borderWidth: 2,
-            borderColor: "#00ffff",
-            hoverBackgroundColor: "#00ffff",
+            backgroundColor: "#007bff",
+            borderColor: "#0056b3",
+            hoverBackgroundColor: "#3399ff",
           },
         ],
       },
       options: {
-        responsive: true,
+        responsive: false,
+        maintainAspectRatio: false,
+        devicePixelRatio: dpr,
         plugins: {
           legend: {
             labels: {
-              color: "#ffffff",
+              color: "#000",
               font: { size: 14 },
             },
           },
           tooltip: {
-            backgroundColor: "#0a0f1a",
-            titleColor: "#00ffff",
-            bodyColor: "#ffffff",
-            borderColor: "#00ffff",
+            backgroundColor: "#f0f0f0",
+            titleColor: "#000",
+            bodyColor: "#000",
+            borderColor: "#ccc",
             borderWidth: 1,
-            titleFont: { size: 14, weight: "bold" },
-            bodyFont: { size: 13 },
           },
         },
         scales: {
           x: {
-            ticks: { color: "#ffffff" },
-            grid: { color: "rgba(255, 255, 255, 0.1)" },
+            ticks: { color: "#000" },
+            grid: { color: "rgba(0, 0, 0, 0.1)" },
           },
           y: {
-            ticks: { color: "#ffffff" },
-            grid: { color: "rgba(255, 255, 255, 0.1)" },
+            ticks: { color: "#000" },
+            grid: { color: "rgba(0, 0, 0, 0.1)" },
           },
         },
       },
     });
+
+    pieCanvas.style.width = `${displayWidth}px`;
+    pieCanvas.style.height = `${displayHeight}px`;
+    pieCanvas.width = displayWidth * dpr;
+    pieCanvas.height = displayHeight * dpr;
+
+    const pieCtx = pieCanvas.getContext("2d", { willReadFrequently: true });
+
+    new Chart(pieCtx, {
+      type: "pie",
+      data: {
+        labels,
+        datasets: [
+          {
+            label: "Sales Share",
+            data,
+            backgroundColor: [
+              "#00c6ff",
+              "#0072ff",
+              "#00ffcc",
+              "#ffaa00",
+              "#ff6384",
+              "#36a2eb",
+              "#cc65fe",
+              "#ffce56",
+              "#4bc0c0",
+              "#9966ff",
+            ],
+            borderColor: "#ffffff",
+            borderWidth: 1,
+          },
+        ],
+      },
+      options: {
+        responsive: false,
+        maintainAspectRatio: false,
+        devicePixelRatio: dpr,
+        layout: {
+          padding: { top: 20, bottom: 20 },
+        },
+        plugins: {
+          legend: {
+            labels: {
+              color: "#000000",
+              font: { size: 14 },
+            },
+          },
+          tooltip: {
+            backgroundColor: "#f0f0f0",
+            titleColor: "#000000",
+            bodyColor: "#000000",
+            borderColor: "#cccccc",
+            borderWidth: 1,
+          },
+        },
+      },
+    });
+
+    document.getElementById("salesChart").style.display = "block";
+    document.getElementById("pieChart").style.display = "block";
   }
 
   document.getElementById("downloadBtn").onclick = function () {
@@ -136,5 +224,37 @@ document.addEventListener("DOMContentLoaded", function () {
     XLSX.writeFile(workbook, "Consolidated_SKU_Sales.xlsx");
   };
 
-  window.handleFiles = handleFiles; // expose to HTML button onclick
+  function downloadCanvasAsPDF(canvasId, filename) {
+    const canvas = document.getElementById(canvasId);
+
+    html2canvas(canvas, { scale: 2 }).then((canvasImage) => {
+      const imgData = canvasImage.toDataURL("image/png");
+      const pdf = new jspdf.jsPDF({
+        orientation: "landscape",
+        unit: "px",
+        format: [canvasImage.width, canvasImage.height],
+      });
+
+      pdf.addImage(imgData, "PNG", 0, 0, canvasImage.width, canvasImage.height);
+      pdf.save(filename);
+    });
+  }
+
+  function downloadCanvasAsPNG(canvasId, filename) {
+    const canvas = document.getElementById(canvasId);
+    const link = document.createElement("a");
+    link.download = filename;
+    link.href = canvas.toDataURL("image/png");
+    link.click();
+  }
+
+  document.getElementById("downloadBar").onclick = function () {
+    downloadCanvasAsPNG("salesChart", "Top_10_Bar_Chart.png");
+  };
+
+  document.getElementById("downloadPie").onclick = function () {
+    downloadCanvasAsPNG("pieChart", "Top_10_Pie_Chart.png");
+  };
+
+  window.handleFiles = handleFiles;
 });
