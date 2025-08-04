@@ -6,9 +6,9 @@
 
 body {
   font-family: "Inter", "Segoe UI", "Roboto", sans-serif;
-  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  background: #ffffff;
   min-height: 100vh;
-  color: #f1f1f1;
+  color: #000000;
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -16,53 +16,74 @@ body {
 }
 
 .container {
-  background: rgba(255, 255, 255, 0.05);
+  background: #ffffff;
   backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 3rem 3.5rem; /* 🔥 more padding */
+  border: 1px solid #cccccc;
+  padding: 3rem 3.5rem;
   border-radius: 20px;
   width: 100%;
   max-width: 1000px;
   box-shadow: 0 0 40px rgba(0, 0, 0, 0.3);
-  margin-top: 2rem; /* 🔥 spacing from top */
+  margin-top: 2rem;
 }
 
 h1 {
-  font-size: 2.8rem; /* 🔥 bigger title */
+  font-size: 2.8rem;
   font-weight: 700;
   text-align: center;
   margin-bottom: 1rem;
-  color: #ffffff;
+  color: #000000;
   letter-spacing: 1px;
 }
 
 .container p {
   text-align: center;
   font-size: 1.1rem;
-  color: #bbbbbb;
-  margin-bottom: 2rem; /* 🔥 more breathing room */
+  color: #333333;
+  margin-bottom: 2rem;
 }
 
 input[type="file"] {
-  display: block;
-  margin: 0 auto 1.5rem auto; /* 🔥 better spacing */
+  display: none;
+  margin: 0 auto 1.5rem auto;
   font-size: 1rem;
-  color: #e0e0e0;
+  padding: 0.75rem 1rem;
+  border: 1px solid #cccccc;
+  border-radius: 6px;
+  background: #f9f9f9;
+  color: #333333;
+  cursor: pointer;
+}
+
+#dropZone {
+  border: 2px dashed #00aaff;
+  border-radius: 12px;
+  padding: 2rem;
   text-align: center;
+  background: #f8faff;
+  color: #007acc;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+#dropZone.dragover {
+  background: #e0f7ff;
+  border-color: #005f99;
 }
 
 button {
   display: block;
-  margin: 0.5rem auto 2rem auto; /* 🔥 centre and space */
+  margin: 0.5rem auto 2rem auto;
   padding: 1rem 2rem;
   font-size: 1.1rem;
   font-weight: 600;
   color: #ffffff;
-  background: linear-gradient(135deg, #00c6ff, #0072ff);
+  background: linear-gradient(135deg, #007bff, #0056b3);
   border: none;
   border-radius: 10px;
   cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 4px 14px rgba(0, 123, 255, 0.4);
 }
 
 button:hover {
@@ -70,15 +91,44 @@ button:hover {
   box-shadow: 0 4px 14px rgba(0, 114, 255, 0.5);
 }
 
+.download-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.download-buttons button {
+  margin: 0;
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+  background: #00aaff;
+  border-radius: 8px;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+.download-buttons button:hover {
+  background: #007acc;
+}
+
 table {
   width: 100%;
   margin-top: 2rem;
   border-collapse: collapse;
   font-size: 1rem;
-  background: rgba(255, 255, 255, 0.04); /* translucent table bg */
+  background: rgba(255, 255, 255, 0.04);
   border-radius: 12px;
   overflow: hidden;
-  color: #ffffff; /* 🔥 Main fix: white text */
+  color: #ffffff;
+}
+
+table,
+th,
+td {
+  color: #000000;
+  text-shadow: none;
 }
 
 th,
@@ -89,29 +139,33 @@ td {
 }
 
 th {
-  background: rgba(0, 199, 255, 0.2);
-  color: #ffffff;
+  background: rgba(0, 123, 255, 0.1);
+  color: #000000;
   text-transform: uppercase;
   font-size: 0.85rem;
   letter-spacing: 0.05rem;
 }
 
 td {
-  color: #eaf6ff;
-  text-shadow: 0 0 4px rgba(0, 255, 255, 0.3);
+  color: #000000;
+  background: rgba(0, 0, 0, 0.02);
 }
 
 tr:hover {
-  background: rgba(0, 255, 255, 0.05);
+  background: rgba(0, 0, 0, 0.05);
 }
 
 canvas {
-  margin-top: 2rem;
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  margin-top: 2.5rem;
+  margin: 2rem auto;
   width: 100% !important;
-  height: 400px !important;
+  max-width: 1000px;
+  display: block;
   background: rgba(255, 255, 255, 0.03);
   border-radius: 12px;
-  padding: 1rem;
+  padding: 1.25rem;
 }
 
 #tableContainer,
