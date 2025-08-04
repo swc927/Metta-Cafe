@@ -13,14 +13,21 @@
 <body>
   <div class="container">
     <h1>Metta Café</h1>
-    <p>Select multiple Excel files</p>
-    <input type="file" id="fileUpload" multiple accept=".xlsx,.xls">
+    <div id="dropZone">
+      <p>📂 Drag & drop Excel files here, or click to select</p>
+      <input type="file" id="fileUpload" accept=".xlsx,.xls" multiple />
+    </div>
     <button onclick="handleFiles()">Analyse Top Sellers</button>
 
     <div id="tableContainer"></div>
 
     <button id="downloadBtn" style="display:none">Download to Excel</button>
     <canvas id="salesChart" style="display:none"></canvas>
+    <canvas id="pieChart" style="display:none"></canvas>
+    <div class="download-buttons">
+      <button id="downloadBar">Download Bar Chart</button>
+      <button id="downloadPie">Download Pie Chart</button>
+    </div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
